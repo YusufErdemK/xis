@@ -1,0 +1,9 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# OS / editor files
+.DS_Store
+*.swp
+*.swo
+*.bak
