@@ -1,4 +1,4 @@
-/* ZeXis State Share - Apple-inspired Styling */
+/* ZeXis State Share - Modern Apple-inspired Styling */
 
 * {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "SF Pro Text", sans-serif;
@@ -8,20 +8,31 @@ window {
   background-color: #f5f5f7;
 }
 
-#main_container {
-  background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%);
-  border-radius: 12px;
+box, frame {
+  background: transparent;
 }
 
-#header_label {
-  color: #1d1d1f;
-  font-weight: 600;
-  letter-spacing: -0.5px;
+frame {
+  border: 1px solid #d2d2d7;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+frame label {
+  padding-top: 10px;
+  padding-left: 15px;
 }
 
 label {
   color: #424245;
   font-size: 14px;
+}
+
+.section-label {
+  color: #1d1d1f;
+  font-weight: 600;
+  font-size: 15px;
 }
 
 combobox, comboboxtext {
@@ -30,10 +41,17 @@ combobox, comboboxtext {
   border-radius: 8px;
   padding: 8px 12px;
   min-height: 40px;
+  font-size: 14px;
 }
 
 combobox:hover, comboboxtext:hover {
   border-color: #86868b;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+combobox:focus, comboboxtext:focus {
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
 }
 
 button {
@@ -43,18 +61,21 @@ button {
   padding: 10px 24px;
   min-height: 40px;
   font-weight: 500;
+  font-size: 14px;
   color: #1d1d1f;
   transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 button:hover {
   background: #f5f5f7;
   border-color: #86868b;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 button:active {
   background: #e8e8ed;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .primary-button {
@@ -62,15 +83,17 @@ button:active {
   color: #ffffff;
   border: none;
   font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
 }
 
 .primary-button:hover {
   background: linear-gradient(180deg, #0077ed 0%, #004ec8 100%);
-  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+  box-shadow: 0 6px 16px rgba(0, 122, 255, 0.4);
 }
 
 .primary-button:active {
   background: linear-gradient(180deg, #0051d5 0%, #003db3 100%);
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
 }
 
 .send-button {
@@ -78,24 +101,39 @@ button:active {
   color: #ffffff;
   border: none;
   font-weight: 600;
+  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
 }
 
 .send-button:hover {
   background: linear-gradient(180deg, #30b350 0%, #1f7a34 100%);
-  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+  box-shadow: 0 6px 16px rgba(52, 199, 89, 0.4);
+}
+
+.send-button:active {
+  background: linear-gradient(180deg, #248a3d 0%, #1a6430 100%);
+  box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
 }
 
 .status-label {
   color: #86868b;
   font-size: 13px;
-  font-style: italic;
 }
 
-/* Scrolled window for future list views */
-scrolledwindow {
-  border: 1px solid #d2d2d7;
-  border-radius: 8px;
-  background: #ffffff;
+progressbar {
+  background-color: #e8e8ed;
+  border-radius: 4px;
+  min-height: 6px;
+}
+
+progressbar trough {
+  background-color: #e8e8ed;
+  border-radius: 4px;
+}
+
+progressbar progress {
+  background: linear-gradient(90deg, #007aff 0%, #0051d5 100%);
+  border-radius: 4px;
+  min-height: 6px;
 }
 
 /* Text entries */
@@ -105,9 +143,22 @@ entry {
   border-radius: 8px;
   padding: 8px 12px;
   min-height: 40px;
+  font-size: 14px;
 }
 
 entry:focus {
   border-color: #007aff;
   box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* Scrolled window */
+scrolledwindow {
+  border: 1px solid #d2d2d7;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+/* Separators */
+separator {
+  color: #d2d2d7;
 }
