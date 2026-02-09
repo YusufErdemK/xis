@@ -1,0 +1,28 @@
+{
+  "name": "xis",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YusufErdemK/xis.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/YusufErdemK/xis/issues"
+  },
+  "homepage": "https://github.com/YusufErdemK/xis#readme",
+  "devDependencies": {
+    "@types/node": "^25.2.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "undici-types": "^7.16.0"
+  },
+  "description": ""
+}
