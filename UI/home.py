@@ -43,6 +43,11 @@ class ZeXisStateShareUI(Gtk.Window):
         self.populate_running_apps()
         vbox.pack_start(self.app_combo, False, False, 0)
 
+        # Refresh button
+        refresh_btn = Gtk.Button(label="🔄 Refresh")
+        refresh_btn.connect("clicked", self.on_refresh_clicked)
+        vbox.pack_start(refresh_btn, False, False, 0)
+
         # Action buttons
         button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
         button_box.set_halign(Gtk.Align.CENTER)
@@ -80,13 +85,75 @@ class ZeXisStateShareUI(Gtk.Window):
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             )
 
+    def get_running_windows(self):
+        """Get actual running windows using wmctrl"""
+        try:
+            # wmctrl -l shows all windows
+            result = subprocess.run(
+                ['wmctrl', '-lx'],
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            
+            windows = []
+            seen_classes = set()
+            
+            for line in result.stdout.strip().split('\n'):
+                if not line:
+                    continue
+                    
+                parts = line.split(None, 3)
+                if len(parts) < 4:
+                    continue
+                
+                # Format: window_id desktop class_name window_title
+                window_class = parts[2].split('.')[1] if '.' in parts[2] else parts[2]
+                window_title = parts[3]
+                
+                # Skip duplicates and desktop/panel windows
+                if window_class.lower() in ['desktop', 'panel', 'dock']:
+                    continue
+                    
+                if window_class not in seen_classes:
+                    seen_classes.add(window_class)
+                    windows.append({
+                        'class': window_class,
+                        'title': window_title
+                    })
+            
+            return windows
+            
+        except FileNotFoundError:
+            self.status_label.set_text("wmctrl not installed. Install: sudo apt install wmctrl")
+            return []
+        except subprocess.CalledProcessError:
+            self.status_label.set_text("Error getting window list")
+            return []
+
     def populate_running_apps(self):
-        """Get list of running applications (simplified)"""
-        # This is a placeholder - real implementation would query window manager
-        sample_apps = ["Firefox", "VSCode", "Terminal", "Spotify"]
-        for app in sample_apps:
-            self.app_combo.append_text(app)
-        self.app_combo.set_active(0)
+        """Get list of running applications from window manager"""
+        self.app_combo.remove_all()
+        
+        windows = self.get_running_windows()
+        
+        if not windows:
+            # Fallback to sample data if wmctrl not available
+            sample_apps = ["Firefox", "VSCode", "Terminal", "Spotify"]
+            for app in sample_apps:
+                self.app_combo.append_text(app)
+        else:
+            for window in windows:
+                display_name = f"{window['class']} - {window['title'][:40]}"
+                self.app_combo.append_text(display_name)
+        
+        if self.app_combo.get_model() and len(self.app_combo.get_model()) > 0:
+            self.app_combo.set_active(0)
+
+    def on_refresh_clicked(self, widget):
+        """Refresh the application list"""
+        self.populate_running_apps()
+        self.status_label.set_text("Refreshed application list")
 
     def on_export_clicked(self, widget):
         """Export selected app state to .xis file"""
@@ -94,6 +161,9 @@ class ZeXisStateShareUI(Gtk.Window):
         if not app_name:
             self.status_label.set_text("Please select an application")
             return
+
+        # Extract just the class name
+        app_class = app_name.split(' - ')[0] if ' - ' in app_name else app_name
 
         dialog = Gtk.FileChooserDialog(
             title="Save State As",
@@ -104,19 +174,19 @@ class ZeXisStateShareUI(Gtk.Window):
             Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
             Gtk.STOCK_SAVE, Gtk.ResponseType.OK
         )
-        dialog.set_current_name(f"{app_name.lower()}-state.xis")
+        dialog.set_current_name(f"{app_class.lower()}-state.xis")
 
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
             output_path = dialog.get_filename()
             script_path = Path(__file__).parent.parent / "scripts" / "export.py"
             result = subprocess.run(
-                ["python3", str(script_path), app_name, output_path],
+                ["python3", str(script_path), app_class, output_path],
                 capture_output=True,
                 text=True
             )
             if result.returncode == 0:
-                self.status_label.set_text(f"Exported: {output_path}")
+                self.status_label.set_text(f"✓ Exported: {os.path.basename(output_path)}")
             else:
                 self.status_label.set_text(f"Export failed: {result.stderr}")
 
@@ -149,7 +219,7 @@ class ZeXisStateShareUI(Gtk.Window):
                 text=True
             )
             if result.returncode == 0:
-                self.status_label.set_text("State imported successfully")
+                self.status_label.set_text("✓ State imported successfully")
             else:
                 self.status_label.set_text(f"Import failed: {result.stderr}")
 
