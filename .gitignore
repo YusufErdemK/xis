@@ -7,8 +7,8 @@ node_modules/
 package-lock.json
 
 # TypeScript compiled files
-*.js
-*.js.map
+# *.js
+# *.js.map
 
 # OS / editor files
 .DS_Store
