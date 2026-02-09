@@ -1,164 +1,271 @@
-/* ZeXis State Share - Modern Apple-inspired Styling */
+/* ===================================================================
+   THEME: ZeXis State Share - Ethereal Modern (GTK3 Compatible)
+   AUTHOR: Gemini (for Yusuf Erdem Kaymak)
+   =================================================================== */
+
+/* ==================== GLOBAL RESET ==================== */
 
 * {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "SF Pro Text", sans-serif;
+  font-family: 'Inter', 'SF Pro Display', sans-serif;
+  -gtk-outline-radius: 12px;
 }
 
 window {
-  background-color: #f5f5f7;
+  background-color: #F4F6F9;
+  color: #1E293B;
 }
 
-box, frame {
-  background: transparent;
+/* Seçim Rengi */
+selection {
+  background-color: #2563EB;
+  color: #ffffff;
 }
 
-frame {
-  border: 1px solid #d2d2d7;
-  border-radius: 12px;
-  background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+/* ==================== MAIN CONTAINER ==================== */
+
+#main_container {
+  background-color: #F4F6F9;
+  padding: 32px;
 }
 
-frame label {
-  padding-top: 10px;
-  padding-left: 15px;
+/* ==================== TYPOGRAPHY ==================== */
+
+#header_label {
+  color: #0F172A;
+  font-weight: 800;
+  font-size: 24px;
+  margin-bottom: 24px;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.05);
 }
 
 label {
-  color: #424245;
+  color: #475569;
   font-size: 14px;
-}
-
-.section-label {
-  color: #1d1d1f;
   font-weight: 600;
-  font-size: 15px;
+  margin-bottom: 4px;
 }
 
-combobox, comboboxtext {
-  background-color: #ffffff;
-  border: 1px solid #d2d2d7;
-  border-radius: 8px;
+/* ==================== INPUTS & COMBOBOXES ==================== */
+
+entry, 
+combobox {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
   padding: 8px 12px;
   min-height: 40px;
-  font-size: 14px;
+  color: #1E293B;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
-combobox:hover, comboboxtext:hover {
-  border-color: #86868b;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+entry:hover, 
+combobox:hover {
+  border-color: #CBD5E1;
+  background-color: #FFFFFF;
 }
 
-combobox:focus, comboboxtext:focus {
-  border-color: #007aff;
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+entry:focus, 
+combobox:focus {
+  border-color: #2563EB;
+  /* GTK'da outline/box-shadow focus için */
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15); 
 }
+
+entry selection, 
+combobox selection {
+  background-color: #2563EB;
+  color: #ffffff;
+}
+
+entry placeholder {
+  color: #94A3B8;
+}
+
+/* ==================== BUTTONS (CORE) ==================== */
 
 button {
-  background: #ffffff;
-  border: 1px solid #d2d2d7;
-  border-radius: 8px;
-  padding: 10px 24px;
-  min-height: 40px;
-  font-weight: 500;
+  background-image: linear-gradient(to bottom, #FFFFFF, #F8FAFC);
+  border: 1px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 8px 20px;
+  min-height: 38px;
+  font-weight: 600;
   font-size: 14px;
-  color: #1d1d1f;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  color: #334155;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  text-shadow: none;
+  margin: 2px; /* Focus halkası için pay */
 }
 
 button:hover {
-  background: #f5f5f7;
-  border-color: #86868b;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  background-image: linear-gradient(to bottom, #FFFFFF, #F1F5F9);
+  border-color: #94A3B8;
+  /* Transform yerine gölgeyi güçlendiriyoruz */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.08); 
 }
 
 button:active {
-  background: #e8e8ed;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  background-image: none;
+  background-color: #E2E8F0;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
 
+/* ==================== PRIMARY BUTTON (Blue) ==================== */
+
 .primary-button {
-  background: linear-gradient(180deg, #007aff 0%, #0051d5 100%);
-  color: #ffffff;
-  border: none;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+  background-image: linear-gradient(to bottom right, #3B82F6, #2563EB);
+  border: 1px solid #1D4ED8; /* Solid border for better contrast */
+  color: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
 }
 
 .primary-button:hover {
-  background: linear-gradient(180deg, #0077ed 0%, #004ec8 100%);
-  box-shadow: 0 6px 16px rgba(0, 122, 255, 0.4);
+  background-image: linear-gradient(to bottom right, #60A5FA, #3B82F6);
+  border-color: #2563EB;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.4);
 }
 
 .primary-button:active {
-  background: linear-gradient(180deg, #0051d5 0%, #003db3 100%);
-  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+  background-image: none;
+  background-color: #1E40AF;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
+/* ==================== SEND BUTTON (Green) ==================== */
+
 .send-button {
-  background: linear-gradient(180deg, #34c759 0%, #248a3d 100%);
-  color: #ffffff;
-  border: none;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+  background-image: linear-gradient(to bottom right, #10B981, #059669);
+  border: 1px solid #047857;
+  color: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
 }
 
 .send-button:hover {
-  background: linear-gradient(180deg, #30b350 0%, #1f7a34 100%);
-  box-shadow: 0 6px 16px rgba(52, 199, 89, 0.4);
+  background-image: linear-gradient(to bottom right, #34D399, #10B981);
+  border-color: #059669;
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
 }
 
 .send-button:active {
-  background: linear-gradient(180deg, #248a3d 0%, #1a6430 100%);
-  box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
+  background-image: none;
+  background-color: #065F46;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
+
+/* ==================== FILE CHOOSER & DIALOGS ==================== */
+
+dialog {
+  background-color: #FFFFFF;
+  color: #1E293B;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+filechooser {
+  background-color: #FFFFFF;
+}
+
+/* Sidebar */
+filechooser .sidebar {
+  background-color: #F8FAFC;
+  border-right: 1px solid #E2E8F0;
+}
+
+filechooser .sidebar row {
+  padding: 6px;
+}
+
+filechooser .sidebar row:selected {
+  background-color: #E0E7FF;
+  color: #2563EB;
+}
+
+/* File List */
+filechooser treeview {
+  background-color: #FFFFFF;
+  color: #334155;
+}
+
+filechooser treeview:selected {
+  background-color: #2563EB;
+  color: #FFFFFF;
+}
+
+filechooser treeview row:hover {
+  background-color: #F1F5F9;
+}
+
+/* ==================== HEADERBAR ==================== */
+
+headerbar {
+  background-image: none;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
+  min-height: 46px;
+  padding: 0 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+headerbar button {
+  background-image: none;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+headerbar button:hover {
+  background-color: #F1F5F9;
+}
+
+/* ==================== POPOVER & MENU ==================== */
+
+popover {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 6px;
+}
+
+popover modelbutton {
+  padding: 8px 12px;
+  color: #334155;
+  min-height: 30px;
+}
+
+popover modelbutton:hover {
+  background-color: #F1F5F9;
+  color: #0F172A;
+}
+
+separator {
+  background-color: #E2E8F0;
+  min-height: 1px;
+}
+
+/* ==================== SCROLLBARS ==================== */
+
+scrollbar {
+  background-color: transparent;
+}
+
+scrollbar slider {
+  background-color: #CBD5E1;
+  border-radius: 8px;
+  min-width: 6px;
+  min-height: 6px;
+  margin: 3px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+scrollbar slider:hover {
+  background-color: #94A3B8;
+}
+
+/* ==================== STATUS LABEL ==================== */
 
 .status-label {
-  color: #86868b;
+  color: #64748B;
   font-size: 13px;
-}
-
-progressbar {
-  background-color: #e8e8ed;
-  border-radius: 4px;
-  min-height: 6px;
-}
-
-progressbar trough {
-  background-color: #e8e8ed;
-  border-radius: 4px;
-}
-
-progressbar progress {
-  background: linear-gradient(90deg, #007aff 0%, #0051d5 100%);
-  border-radius: 4px;
-  min-height: 6px;
-}
-
-/* Text entries */
-entry {
-  background: #ffffff;
-  border: 1px solid #d2d2d7;
-  border-radius: 8px;
-  padding: 8px 12px;
-  min-height: 40px;
-  font-size: 14px;
-}
-
-entry:focus {
-  border-color: #007aff;
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
-}
-
-/* Scrolled window */
-scrolledwindow {
-  border: 1px solid #d2d2d7;
-  border-radius: 8px;
-  background: #ffffff;
-}
-
-/* Separators */
-separator {
-  color: #d2d2d7;
+  margin-top: 12px;
 }
