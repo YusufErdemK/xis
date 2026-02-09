@@ -9,6 +9,8 @@ import os
 import sys
 import tarfile
 import tempfile
+import subprocess
+import time
 from pathlib import Path
 from typing import Dict, Any
 
@@ -86,6 +88,109 @@ def restore_app_state(manifest: Dict[str, Any]) -> None:
     print(f"✓ Restored state for {manifest.get('app', 'unknown app')}")
 
 
+def launch_application(app_name: str, window_state: Dict[str, Any]) -> None:
+    """
+    Launch the application and restore window geometry
+    """
+    app_name_lower = app_name.lower()
+    
+    # Common application launch commands
+    app_commands = {
+        'firefox': ['firefox'],
+        'chrome': ['google-chrome'],
+        'chromium': ['chromium'],
+        'code': ['code'],
+        'vscode': ['code'],
+        'terminal': ['gnome-terminal'],
+        'gnome-terminal': ['gnome-terminal'],
+        'konsole': ['konsole'],
+        'nautilus': ['nautilus'],
+        'spotify': ['spotify'],
+        'discord': ['discord'],
+        'slack': ['slack'],
+        'telegram': ['telegram-desktop'],
+    }
+    
+    # Find appropriate command
+    launch_cmd = None
+    for key, cmd in app_commands.items():
+        if key in app_name_lower:
+            launch_cmd = cmd
+            break
+    
+    if not launch_cmd:
+        # Try to use the app name directly
+        launch_cmd = [app_name_lower]
+    
+    try:
+        # Launch the application
+        print(f"Launching {app_name}...")
+        process = subprocess.Popen(
+            launch_cmd,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        
+        # Wait for window to appear
+        time.sleep(2)
+        
+        # Restore window geometry if available
+        if window_state and 'geometry' in window_state:
+            geometry = window_state['geometry']
+            x = geometry.get('x', 100)
+            y = geometry.get('y', 100)
+            width = geometry.get('width', 800)
+            height = geometry.get('height', 600)
+            
+            # Use wmctrl to set window position and size
+            try:
+                # Find the window
+                result = subprocess.run(
+                    ['wmctrl', '-l'],
+                    capture_output=True,
+                    text=True
+                )
+                
+                window_id = None
+                for line in result.stdout.split('\n'):
+                    if app_name.lower() in line.lower():
+                        window_id = line.split()[0]
+                        break
+                
+                if window_id:
+                    # Move and resize window
+                    # Format: wmctrl -i -r <window_id> -e <gravity>,<x>,<y>,<width>,<height>
+                    subprocess.run([
+                        'wmctrl', '-i', '-r', window_id,
+                        '-e', f'0,{x},{y},{width},{height}'
+                    ])
+                    print(f"✓ Restored window geometry: {width}x{height}+{x}+{y}")
+                    
+                    # Set workspace if available
+                    if 'workspace' in window_state:
+                        workspace = window_state['workspace']
+                        subprocess.run([
+                            'wmctrl', '-i', '-r', window_id,
+                            '-t', str(workspace)
+                        ])
+                        print(f"✓ Moved to workspace {workspace}")
+                else:
+                    print("⚠ Window not found for geometry restoration")
+                    
+            except FileNotFoundError:
+                print("⚠ wmctrl not found, skipping window positioning")
+            except Exception as e:
+                print(f"⚠ Could not restore window geometry: {e}")
+        
+        print(f"✓ Launched {app_name}")
+        
+    except FileNotFoundError:
+        print(f"✗ Could not launch {app_name}: command not found")
+        print(f"  Please install {app_name} or launch it manually")
+    except Exception as e:
+        print(f"✗ Error launching {app_name}: {e}")
+
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: import.py <file.xis>")
@@ -97,8 +202,18 @@ def main():
         print(f"Error: {xis_path} not found")
         sys.exit(1)
 
+    # Extract and restore state
     manifest = extract_xis_archive(xis_path)
     restore_app_state(manifest)
+    
+    # Launch application with restored window state
+    app_name = manifest.get('app', '')
+    window_state = manifest.get('window', {})
+    
+    if app_name:
+        launch_application(app_name, window_state)
+    else:
+        print("⚠ No application name in manifest, skipping launch")
 
 
 if __name__ == "__main__":
