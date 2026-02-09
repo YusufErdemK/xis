@@ -24,16 +24,21 @@ export async function getRunningApps(): Promise<AppState[]> {
   return [
     {
       name: "Firefox",
-      pid: 1234,
+      pid: 1234, // bunu da salladım (means: I just made this up)
       windowGeometry: { x: 100, y: 100, width: 1280, height: 720 },
       workspace: 1
     },
     {
       name: "VSCode",
-      pid: 5678,
+      pid: 5678, // salladım (also made this up)
       windowGeometry: { x: 200, y: 150, width: 1600, height: 900 },
       workspace: 1
     }
+
+    // zaten bu bilgileri export.py'den alacağız, bu sadece UI için placeholder olarak duruyor 
+    // (means: we will get this information from export.py, this is just a placeholder for the UI)
+
+    // btw if you see this comments, it means i didnt lost any time for writing them PHFUEGFEHYFE (this is laughing in turkish)
   ];
 }
 
@@ -63,8 +68,9 @@ export async function restoreWindowState(appName: string, state: any): Promise<v
   // This would use wmctrl or similar to restore window position
   console.log(`Restoring window state for ${appName}:`, state);
   
-  // Example wmctrl command (would be executed via child_process)
-  // wmctrl -r appName -e 0,x,y,width,height
+  // Just example wmctrl command (would be executed via child_process)
+  // wmctrl -r appName -e 0, x, y, width, height
 }
 
+// Finally ahh
 export { AppState };
