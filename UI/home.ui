@@ -5,48 +5,70 @@
   
   <object class="GtkWindow" id="main_window">
     <property name="title">ZeXis State Share</property>
-    <property name="default-width">600</property>
-    <property name="default-height">400</property>
+    <property name="default-width">700</property>
+    <property name="default-height">500</property>
     <property name="window-position">center</property>
+    <property name="icon-name">gtk-refresh</property>
     
     <child>
       <object class="GtkBox" id="main_container">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">15</property>
+        <property name="spacing">20</property>
         <property name="margin">20</property>
         
         <!-- Header -->
         <child>
           <object class="GtkLabel" id="header_label">
             <property name="visible">True</property>
-            <property name="label">State Share</property>
+            <property name="label">✨ ZeXis State Share</property>
             <property name="xalign">0</property>
             <attributes>
-              <attribute name="scale" value="1.5"/>
+              <attribute name="scale" value="1.8"/>
               <attribute name="weight" value="bold"/>
+              <attribute name="foreground" value="#1d1d1f"/>
             </attributes>
           </object>
         </child>
         
-        <!-- App Selector -->
+        <!-- Separator -->
         <child>
-          <object class="GtkBox" id="selector_box">
+          <object class="GtkSeparator" id="sep1">
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
-            <property name="spacing">8</property>
+            <property name="orientation">horizontal</property>
+          </object>
+        </child>
+        
+        <!-- App Selector Frame -->
+        <child>
+          <object class="GtkFrame" id="selector_frame">
+            <property name="visible">True</property>
+            <property name="label-xalign">0</property>
+            <property name="shadow-type">none</property>
             
             <child>
-              <object class="GtkLabel" id="app_label">
+              <object class="GtkBox" id="selector_inner_box">
                 <property name="visible">True</property>
-                <property name="label">Select running application:</property>
-                <property name="xalign">0</property>
-              </object>
-            </child>
-            
-            <child>
-              <object class="GtkComboBoxText" id="app_combo">
-                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">10</property>
+                <property name="margin-start">15</property>
+                <property name="margin-end">15</property>
+                <property name="margin-top">10</property>
+                <property name="margin-bottom">10</property>
+                
+                <child>
+                  <object class="GtkLabel" id="app_label">
+                    <property name="visible">True</property>
+                    <property name="label">Select running application:</property>
+                    <property name="xalign">0</property>
+                  </object>
+                </child>
+                
+                <child>
+                  <object class="GtkComboBoxText" id="app_combo">
+                    <property name="visible">True</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
@@ -64,7 +86,9 @@
             <child>
               <object class="GtkButton" id="export_btn">
                 <property name="visible">True</property>
-                <property name="label">Export State</property>
+                <property name="label">📤 Export State</property>
+                <property name="width-request">140</property>
+                <property name="height-request">45</property>
                 <style>
                   <class name="primary-button"/>
                 </style>
@@ -74,14 +98,18 @@
             <child>
               <object class="GtkButton" id="import_btn">
                 <property name="visible">True</property>
-                <property name="label">Import State</property>
+                <property name="label">📥 Import State</property>
+                <property name="width-request">140</property>
+                <property name="height-request">45</property>
               </object>
             </child>
             
             <child>
               <object class="GtkButton" id="send_btn">
                 <property name="visible">True</property>
-                <property name="label">Send to Computer</property>
+                <property name="label">🌐 Send to Computer</property>
+                <property name="width-request">160</property>
+                <property name="height-request">45</property>
                 <style>
                   <class name="send-button"/>
                 </style>
@@ -90,20 +118,47 @@
           </object>
         </child>
         
-        <!-- Status Label -->
+        <!-- Status Area Frame -->
         <child>
-          <object class="GtkLabel" id="status_label">
+          <object class="GtkFrame" id="status_frame">
             <property name="visible">True</property>
-            <property name="label">Ready</property>
-            <property name="xalign">0</property>
-            <property name="margin-top">30</property>
-            <style>
-              <class name="status-label"/>
-            </style>
+            <property name="label-xalign">0</property>
+            <property name="shadow-type">none</property>
+            
+            <child>
+              <object class="GtkBox" id="status_inner_box">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">8</property>
+                <property name="margin-start">15</property>
+                <property name="margin-end">15</property>
+                <property name="margin-top">10</property>
+                <property name="margin-bottom">10</property>
+                
+                <child>
+                  <object class="GtkLabel" id="status_label">
+                    <property name="visible">True</property>
+                    <property name="label">Ready</property>
+                    <property name="xalign">0</property>
+                    <style>
+                      <class name="status-label"/>
+                    </style>
+                  </object>
+                </child>
+                
+                <child>
+                  <object class="GtkProgressBar" id="progress_bar">
+                    <property name="visible">False</property>
+                    <property name="show-text">True</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            
+            <packing>
+              <property name="pack-type">end</property>
+            </packing>
           </object>
-          <packing>
-            <property name="pack-type">end</property>
-          </packing>
         </child>
       </object>
     </child>
