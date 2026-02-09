@@ -2,8 +2,39 @@
 __pycache__/
 *.pyc
 
+# Node modules
+node_modules/
+package-lock.json
+
+# TypeScript compiled files
+*.js
+*.js.map
+
 # OS / editor files
 .DS_Store
 *.swp
 *.swo
 *.bak
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+temp/*
+!temp/README.md
+
+# xisfs runtime data (user-specific)
+xisfs/config/app.conf
+xisfs/state/*.json
+xisfs/window/*.json
+xisfs/mods/*
+!xisfs/config/mods/*.json
+
+# Build outputs
+dist/
+build/
+*.xis
+
+# Logs
+*.log
